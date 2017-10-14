@@ -18,8 +18,8 @@ describe('Hero', function () {
     hero1 = new Hero("xyz", "cheese");
     food1 = new Food("apple", 10);
     task1 = new Task("high", "medium", 25)
-    task2 = new Task("medium", "medium", 8)
-    task3 = new Task("medium", "medium", 5)
+    task2 = new Task("medium", "high", 32)
+    task3 = new Task("medium", "medium", 52)
     task4 = new Task("medium", "high", 20)
     task5 = new Task("low", "low", 2)
     task6 = new Task("medium", "low", 50)
@@ -63,8 +63,20 @@ describe('Hero', function () {
     hero1.addQuest(task2);
     hero1.addQuest(task1);
     hero1.addQuest(task3);
-    hero1.sortQuestsByDfiff('difficulty');
+    hero1.sortQuests('difficulty');
     assert.deepEqual(hero1.quests, [task1, task2, task3])
+    hero1.sortQuests('urgency')
+    assert.deepEqual(hero1.quests, [task2, task1, task3])
+    hero1.sortQuests('reward')
+    assert.deepEqual(hero1.quests, [task1, task2, task3])
+  })
+
+  it("should be able to filter by completness", function () {
+    hero1.addQuest(task1);
+    hero1.addQuest(task2);
+    hero1.addQuest(task3);
+    task3.finishQuest(task3);
+    assert.deepEqual(hero1.filterQuests(false), [task1, task2])
   })
 
 })
